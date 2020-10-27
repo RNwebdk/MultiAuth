@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+declare(strict_types=1);
 
-use Illuminate\Http\Request;
+namespace App\Http\Controllers;
 
 class UserController extends Controller
 {
-    //
+    public function index()
+    {
+        return view('user.index');
+    }
 }

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -40,36 +42,13 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
-    // public function redirectTo()
-    // {
-    //     switch(Auth::user()->role){
-    //         case 1:
-    //             $this->redirectTo = '/admin';
-    //             return $this->redirectTo;
-    //             break;
-    //         case 2:
-    //             $this->redirectTo = '/manager';
-    //             return $this->redirectTo;
-    //             break;
-    //         case 3:
-    //             $this->redirectTo = '/user';
-    //             return $this->redirectTo;
-    //             break;
-    //         default:
-    //             $this->redirectTo = '/';
-    //             return $this->redirectTo;
-    //     }
-         
-    //     // return $next($request);
-    // } 
-
-    public function redirectTo()
+    public function redirectTo() : string
     {
         $locations = [
             1 => '/admin',
             2 => '/manager',
             3 => '/user'
-       ];
-       return $locations[Auth::user()->role] ?? '/';
-    } 
+        ];
+        return $locations[Auth::user()->role] ?? '/';
+    }
 }
