@@ -26,9 +26,20 @@ class Dashboard
             UserType::ADMINISTRATOR => 'admin',
         ];
 
-        if ($request->route()->getName() === 'home' && $request->user()) {
-            return Redirect::route($routes[$request->user()->role]);
+        $routeName = 'home';
+        if ($request->route() !== null) {
+            $routeName = $request->route()->getName();
         }
+
+        if ($request->user()) {
+            if ($routeName === 'home') {
+                return Redirect::route($routes[$request->user()->role]);
+            }
+            if ($routeName !== $routes[$request->user()->role]) {
+                abort(403);
+            }
+        }
+
         return $next($request);
     }
 }
